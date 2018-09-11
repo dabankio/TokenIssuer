@@ -3,4 +3,4 @@
 VERSION=`git describe --tags --dirty`
 BUILD=`date +%FT%T%z`
 
-go build -ldflags "-s -w -X github.com/dabankio/TokenIssuer/cmd/issueToken.Version=$VERSION -X github.com/dabankio/TokenIssuer/cmd/issueToken.BuildDate=$BUILD"
+go build -ldflags "-s -w -X main.Version=$VERSION -X main.BuildDate=$BUILD"

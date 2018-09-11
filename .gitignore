@@ -6,7 +6,7 @@
 *.dylib
 *.abi
 *.bin
-/cmd/issueToken/issueToken
+/cmd/issueToken/issueToken*
 
 # IDEs
 /.idea
