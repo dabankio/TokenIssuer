@@ -34,6 +34,11 @@ var (
 	decimals    uint64
 	owner       string
 	prikeyStr   string
+
+	// Version build params
+	Version string
+	// BuildDate build params
+	BuildDate string
 )
 
 func init() {
@@ -48,6 +53,8 @@ func init() {
 
 func main() {
 	flag.Parse()
+
+	fmt.Printf("issueToken(%s) by Dabank Authors, built on %s\n", Version, BuildDate)
 
 	var err error
 	defer func() {
