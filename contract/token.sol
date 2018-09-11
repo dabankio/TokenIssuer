@@ -55,7 +55,7 @@ library SafeMath {
 contract ERC20Basic {
     uint public totalSupply;
 
-    function  balanceOf(address who) public constant returns (uint);
+    function balanceOf(address who) public view returns (uint);
 
     function transfer(address to, uint value) public;
 
@@ -96,7 +96,7 @@ contract BasicToken is ERC20Basic {
     * @param _owner The address to query the the balance of.
     * @return An uint representing the amount owned by the passed address.
     */
-    function balanceOf(address _owner) public constant returns (uint balance)  {
+    function balanceOf(address _owner) public view returns (uint balance)  {
         return balances[_owner];
     }
 
@@ -108,7 +108,7 @@ contract BasicToken is ERC20Basic {
  * @dev see https://github.com/ethereum/EIPs/issues/20
  */
 contract ERC20 is ERC20Basic {
-    function allowance(address owner, address spender) public constant returns (uint);
+    function allowance(address owner, address spender) public view returns (uint);
 
     function transferFrom(address from, address to, uint value) public;
 
@@ -170,7 +170,7 @@ contract StandardToken is BasicToken, ERC20 {
      * @param _spender address The address which will spend the funds.
      * @return A uint specifing the amount of tokens still avaible for the spender.
      */
-    function allowance(address _owner, address _spender) public constant returns (uint remaining) {
+    function allowance(address _owner, address _spender) public view returns (uint remaining) {
         return allowed[_owner][_spender];
     }
 
@@ -317,7 +317,7 @@ contract Pausable is Ownable {
 
 contract PausableToken is StandardToken, Pausable {
 
-    function transfer(address _to, uint _value)  whenNotPaused public {
+    function transfer(address _to, uint _value) whenNotPaused public {
         super.transfer(_to, _value);
     }
 
