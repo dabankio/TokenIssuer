@@ -4,6 +4,11 @@
 *.dll
 *.so
 *.dylib
+*.abi
+*.bin
+
+# IDEs
+/.idea
 
 # Test binary, build with `go test -c`
 *.test
