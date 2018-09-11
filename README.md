@@ -2,6 +2,8 @@
 
 Issue Your ERC-20 Token in a Minute. :rocket:
 
+Download the latest release [here](https://github.com/dabankio/TokenIssuer/releases).
+
 ```
 $ issueToken -h
 
