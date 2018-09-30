@@ -76,7 +76,7 @@ contract BasicToken is ERC20Basic {
      * @dev Fix for the ERC20 short address attack.
      */
     modifier onlyPayloadSize(uint size) {
-        require(msg.data.length < size + 4, "payload size does not match");
+        require(msg.data.length == size + 4, "payload size does not match");
         _;
     }
 
@@ -158,7 +158,7 @@ contract StandardToken is BasicToken, ERC20 {
         //  allowance to zero by calling `approve(_spender, 0)` if it is not
         //  already 0 to mitigate the race condition described here:
         //  https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729
-        require((_value != 0) && (allowed[msg.sender][_spender] != 0));
+        if ((_value != 0) && (allowed[msg.sender][_spender] != 0)) revert();
 
         allowed[msg.sender][_spender] = _value;
         emit Approval(msg.sender, _spender, _value);
@@ -199,7 +199,7 @@ contract Ownable {
      * @dev Throws if called by any account other than the owner.
      */
     modifier onlyOwner() {
-        require(msg.sender != owner, "only owner can call");
+        require(msg.sender == owner, "only owner can call");
         _;
     }
 
@@ -233,7 +233,7 @@ contract MintableToken is StandardToken, Ownable {
 
 
     modifier canMint() {
-        require(mintingFinished, "mint finished.");
+        require(!mintingFinished, "mint finished.");
         _;
     }
 
@@ -247,6 +247,7 @@ contract MintableToken is StandardToken, Ownable {
         totalSupply = totalSupply.add(_amount);
         balances[_to] = balances[_to].add(_amount);
         emit Mint(_to, _amount);
+        emit Transfer(0x0, _to, _amount);
         return true;
     }
 
@@ -277,7 +278,7 @@ contract Pausable is Ownable {
      * @dev modifier to allow actions only when the contract IS paused
      */
     modifier whenNotPaused() {
-        require(paused, "contract not paused");
+        require(!paused, "contract not paused");
         _;
     }
 
@@ -285,7 +286,7 @@ contract Pausable is Ownable {
      * @dev modifier to allow actions only when the contract IS NOT paused
      */
     modifier whenPaused {
-        require(!paused, "contract paused");
+        require(paused, "contract paused");
         _;
     }
 
@@ -395,6 +396,7 @@ contract Token is PausableToken, MintableToken {
         totalSupply = initialSupply;
         balances[tokenOwner] = initialSupply;
         emit Mint(tokenOwner, initialSupply);
+        emit Transfer(0x0, tokenOwner, initialSupply);
     }
 
     /**
